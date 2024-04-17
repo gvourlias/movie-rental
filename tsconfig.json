@@ -19,7 +19,19 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@services": ["./src/domain/services"],
+      "@interceptors": ["./src/domain/interceptors"],
+      "@models": ["./src/domain/models"],
+      "@pipes": ["./src/domain/pipes"],
+      "@storage": ["./src/domain/storage"],
+      "@utils": ["./src/domain/utils"],
+      "@guards": ["./src/domain/guards"],
+      "@components": ["./src/domain/components"],
+      "@facade" : ["./src/domain/facade"],
+      "@injectionTokens" : ["./src/domain/injection.tokens"],
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

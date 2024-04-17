@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+html, body { 
+    height: 100%;
+     background-color: #E6E6FA; 
+     background-image: url("./assets/background-app-image.png");
+     background-repeat: no-repeat;
+     background-blend-mode: overlay;
+     background-size: cover;
+    }
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

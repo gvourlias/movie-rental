@@ -1,9 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ILoginResponse, LoginResponse } from '@models';
-import { ILoginRequest, LoginRequest } from 'src/domain/models/login/login.request';
+import {
+  ILoginResponse,
+  LoginResponse,
+  ILoginRequest,
+  LoginRequest,
+  UserIdentity,
+} from '@models';
+import { jwtDecode } from 'jwt-decode';
 
 export interface IAuthService {
   username: string;
@@ -16,15 +22,29 @@ export interface IAuthService {
   setAccessToken(accessToken: string): string;
   getRefreshToken(): string;
   setRefreshToken(refreshToken: string): string;
+  getCurrentUserIdentity(): UserIdentity;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService implements IAuthService {
   public username!: string;
+  private userIdentity!: UserIdentity;
   private accessToken!: string;
   private refreshToken!: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (accessToken) {
+      this.setAccessToken(accessToken);
+    }
+
+    if (refreshToken) {
+      this.setRefreshToken(refreshToken);
+    }
+  }
 
   public login(request: ILoginRequest): Observable<ILoginResponse> {
     const loginUrl = '/api/auth/login/';
@@ -50,6 +70,9 @@ export class AuthService implements IAuthService {
         const loginResponse = new LoginResponse();
         loginResponse.success = true;
         loginResponse.message = 'Login successful';
+
+        this.updateUserIdentity(accessToken);
+
         return loginResponse;
       }),
       catchError((error) => {
@@ -118,8 +141,39 @@ export class AuthService implements IAuthService {
 
     isAccessTokenValid = this.isAccessTokenExpired(tokenToCheck);
 
-    return isAccessTokenValid;
+    if (!isAccessTokenValid) {
+      return false;
+    }
+
+    this.updateUserIdentity(tokenToCheck);
+
+    return true;
   }
+
+  private updateUserIdentity(token: string): UserIdentity {
+    let claims: any;
+
+    try {
+      claims = jwtDecode(token);
+    } catch (Error) {
+      claims = null;
+    }
+
+    if (!claims) {
+      this.logout();
+      throw new Error('Could not decode token');
+    }
+
+    if (!this.userIdentity) {
+      this.userIdentity = new UserIdentity();
+    }
+    this.userIdentity.isAdmin = claims.is_admin;
+    this.userIdentity.id = claims.user_id;
+
+    return this.userIdentity;
+  }
+
+  private getClaims(token: string): any {}
 
   public isAccessTokenExpired(accessToken: string): boolean {
     if (!accessToken) {
@@ -157,5 +211,9 @@ export class AuthService implements IAuthService {
 
   public setRefreshToken(value: string): string {
     return (this.refreshToken = value);
+  }
+
+  public getCurrentUserIdentity(): UserIdentity {
+    return this.userIdentity;
   }
 }

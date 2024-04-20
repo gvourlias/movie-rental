@@ -5,7 +5,7 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { AuthFacade } from '@facade';
 
 @Injectable()
-export class TokenInterceptor implements HttpInterceptor {
+export class TokenRefreshInterceptor implements HttpInterceptor {
 
   constructor(private authFacade: AuthFacade) {}
 

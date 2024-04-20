@@ -1,6 +1,6 @@
-import { Inject, Injectable, inject } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { AUTH_SERVICE_TOKEN } from '@injectionTokens';
-import { ILoginRequest, ILoginResponse } from '@models';
+import { ILoginRequest, ILoginResponse, UserIdentity } from '@models';
 import { IAuthService } from '@services';
 import { Observable } from 'rxjs';
 
@@ -34,5 +34,12 @@ export class AuthFacade {
   }
   public setRefreshToken(refreshToken: string): string {
     return this.authService.setRefreshToken(refreshToken);
+  }
+  public getCurrentUserIdentity(): UserIdentity {
+    return this.authService.getCurrentUserIdentity();
+  }
+  public isCurrentUserIdentityAdmin(): boolean {
+    const userIdentity = this.getCurrentUserIdentity();
+    return !!userIdentity?.isAdmin;
   }
 }

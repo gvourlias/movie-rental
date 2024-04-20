@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ILoginResponse, LoginResponse } from '@models';
-import { ILoginRequest } from 'src/domain/models/login/login.request';
+import { ILoginResponse, LoginResponse, ILoginRequest, UserIdentity } from '@models';
 import { IAuthService } from '@services';
 
 @Injectable({
@@ -60,5 +59,12 @@ export class MockAuthService implements IAuthService {
 
   public setRefreshToken(value: string): string {
     return (this.refreshToken = value);
+  }
+
+  getCurrentUserIdentity(): UserIdentity {
+    const userIdentity = new UserIdentity();
+    userIdentity.username = 'test';
+    userIdentity.isAdmin = true;
+    return userIdentity;
   }
 }

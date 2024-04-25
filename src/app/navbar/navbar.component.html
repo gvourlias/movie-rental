@@ -1,0 +1,40 @@
+<mat-toolbar class="home-toolbar" color="primary">
+  <div class="side-to-side-center">
+    <img src="assets/movie-icon.png" class="movie-icon-logo" routerLink="/home"/>
+    <span routerLink="/home">Movie Rental Store</span>
+  </div>
+  <div class="side-to-side-center" *ngIf="isLoggedIn()">
+    <button
+      mat-icon-button
+      aria-label="showing a list icon"
+      matTooltip="My Rentals"
+      routerLink="/my-rentals"
+    >
+      <mat-icon>list</mat-icon>
+    </button>
+
+    <button
+      *ngIf="isCurrentUserIdentityAdmin()"
+      mat-icon-button
+      aria-label="showing a list icon"
+      matTooltip="All users info"
+    >
+      <mat-icon>list</mat-icon>
+    </button>
+
+    <button
+      mat-button
+      [matMenuTriggerFor]="menu"
+      aria-label="showing a person icon"
+      matTooltip="Profile actions"
+    >
+      <mat-icon [ngClass]="{ 'user-admin-icon': isCurrentUserIdentityAdmin() }"
+        >person</mat-icon
+      >
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/logout">Logout</button>
+    </mat-menu>
+    <app-user-wallet-indicator></app-user-wallet-indicator>
+  </div>
+</mat-toolbar>

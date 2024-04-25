@@ -10,7 +10,7 @@ import {
   Rental,
   RentalQueryResponse,
 } from '@models';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   GetRentalRequest,
@@ -21,7 +21,19 @@ import {
   providedIn: 'root',
 })
 export class RentalService {
+  private savedUserActiveRentals: IRental[] = [];
+  private userActiveRentalsBehaviorSubject: BehaviorSubject<IRental[]> =
+    new BehaviorSubject<IRental[]>([]);
+  public userActiveRentals$: Observable<IRental[]> =
+    this.userActiveRentalsBehaviorSubject.asObservable();
+
   constructor(private authFacade: AuthFacade, private http: HttpClient) {}
+
+  public refreshUserActiveRentals() {
+    this.getAllUserActiveRentals().subscribe((rentals) => {
+      this.userActiveRentalsBehaviorSubject.next(rentals.results);
+    });
+  }
 
   public getUserRentals(
     request: IRentalQueryRequest
@@ -38,6 +50,24 @@ export class RentalService {
           return new RentalQueryResponse(response);
         })
       );
+  }
+
+  public getAllUserActiveRentals(): Observable<IRentalQueryResponse> {
+    return this.http
+      .get<IRentalQueryRequest>(
+        '/api/rent-store/rentals/?only-active=true&page_size=100'
+      )
+      .pipe(
+        map((response) => {
+          const rentalResponse = new RentalQueryResponse(response);
+          this.savedUserActiveRentals = rentalResponse.results;
+          return rentalResponse;
+        })
+      );
+  }
+
+  public getSavedUserActiveRentals(): IRental[] {
+    return this.savedUserActiveRentals;
   }
 
   public rentMovie(request: IRentMovie): Observable<IRentMovie> {

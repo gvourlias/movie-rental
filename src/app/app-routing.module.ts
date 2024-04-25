@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { LoggedInActivateGuard } from 'src/domain/guards/activate/logged.in.activate.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AlreadyLoggedInActivateGuard } from '@guards';
+import { MyRentalsComponent } from './my-rentals/my-rentals.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [LoggedInActivateGuard] },
@@ -19,7 +20,16 @@ const routes: Routes = [
     component: LoginComponent,
     canActivate: [AlreadyLoggedInActivateGuard],
   },
-  { path: 'logout', component: LogoutComponent },
+  {
+    path: 'my-rentals',
+    component: MyRentalsComponent,
+    canActivate: [LoggedInActivateGuard],
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent,
+    canActivate: [LoggedInActivateGuard],
+  },
   { path: '**', component: NotFoundComponent },
 ];
 

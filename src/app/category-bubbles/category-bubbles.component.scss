@@ -1,0 +1,23 @@
+.category-bubble {
+  padding: 5px;
+  background-color: cornflowerblue;
+  border-radius: 25px;
+  margin-left: 2px;
+  color: black;
+  margin-right: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.is-clicked {
+  background-color: purple;
+}
+
+span.category-bubble.not-clickable {
+  cursor: unset;
+}
+
+:host {
+  white-space: nowrap;
+}

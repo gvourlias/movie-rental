@@ -6,6 +6,7 @@ export interface IMovie {
   rating: number;
   description: string;
   poster_url: string;
+  categories: string[];
 }
 
 export class Movie implements IMovie {
@@ -16,6 +17,7 @@ export class Movie implements IMovie {
   rating: number;
   description: string;
   poster_url: string;
+  categories: string[];
 
   constructor(data?: any) {
     this.uuid = data?.uuid ?? '';
@@ -25,5 +27,6 @@ export class Movie implements IMovie {
     this.rating = data?.rating ?? undefined;
     this.description = data?.description ?? '';
     this.poster_url = data?.poster_url ?? '';
+    this.categories = data?.categories ?? [];
   }
 }

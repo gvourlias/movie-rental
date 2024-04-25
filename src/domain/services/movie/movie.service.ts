@@ -26,13 +26,13 @@ export class MovieService {
 
     let categoryStringParams = '';
     if (categories.length > 0) {
-      categoryStringParams = '?category[]=' + categories.join('&category[]=');
+      categoryStringParams = '&category=' + categories.join('&category=');
     }
 
     const orderBy = request.orderBy;
     let orderByStringParams = '';
-    if (categories.length > 0) {
-      orderByStringParams = '?orderBy[]=' + orderBy.join('&orderBy[]=');
+    if (orderBy.length > 0) {
+      orderByStringParams = '&orderBy=' + orderBy.join('&orderBy=');
     }
 
     return this.http
@@ -69,5 +69,17 @@ export class MovieService {
           return new MovieRequestModel(response);
         })
       );
+  }
+
+  public getAllMovieCategories(): Observable<string[]> {
+    return this.http.get<string[]>('/api/rent-store/categories/').pipe(
+      map((response: any[]) => {
+        let categories: string[] = [];
+        response.forEach((category) => {
+          categories.push(category.name);
+        });
+        return categories;
+      })
+    );
   }
 }

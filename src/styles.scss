@@ -1,13 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
-html, body { 
-    height: 100%;
-     background-color: #E6E6FA; 
-     background-image: url("./assets/background-app-image.png");
-     background-repeat: no-repeat;
-     background-blend-mode: overlay;
-     background-size: cover;
-    }
+html,
+body {
+  height: 100%;
+  background: #ad5389;
+  background: -webkit-linear-gradient(to right, #3c1053, #ad5389);
+  background: linear-gradient(to right, #3c1053, #ad5389);
+}
 
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.side-to-side-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.movie-details-dialog .mat-dialog-container {
+  background: radial-gradient(circle, #001166 0%, #390546 100%);
+  padding: 0px;
+  overflow: hidden;
+  color: white;
+  height: 500px;
+}

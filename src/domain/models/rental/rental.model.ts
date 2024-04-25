@@ -4,7 +4,8 @@ export interface IRental {
   returnDate: string;
   isPaid: boolean;
   user: number | undefined;
-  movieId: string;
+  movie: string;
+  charge: number;
 }
 
 export class Rental implements IRental {
@@ -13,7 +14,8 @@ export class Rental implements IRental {
   returnDate!: string;
   isPaid!: boolean;
   user!: number | undefined;
-  movieId!: string;
+  movie!: string;
+  charge = 0;
 
   constructor(data?: any) {
     this.uuid = data?.uuid ?? '';
@@ -21,6 +23,7 @@ export class Rental implements IRental {
     this.returnDate = data?.return_date ?? '';
     this.isPaid = data?.is_paid ?? false;
     this.user = data?.user ?? undefined;
-    this.movieId = data?.movie ?? '';
+    this.movie = data?.movie ?? '';
+    this.charge = data?.charge ?? 0;
   }
 }

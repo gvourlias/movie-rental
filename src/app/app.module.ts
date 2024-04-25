@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,11 +14,33 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AlreadyLoggedInActivateGuard, LoggedInActivateGuard } from '@guards';
 import { SharedDomainModule } from 'src/domain/shared.domain.module';
 import { environment } from 'src/environments/environment';
 import { AuthService, MockAuthService } from '@services';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NavbarComponent } from './navbar/navbar.component';
+import { MovieRecommendationComponent } from './movie-recommendation/movie-recommendation.component';
+import { MyRentalsComponent } from './my-rentals/my-rentals.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { TokenBearerInterceptor } from 'src/domain/interceptors/token.bearer.interceptor';
+import { TokenRefreshInterceptor } from '@interceptors';
+import { UserWalletIndicatorComponent } from './user-wallet-indicator/user-wallet-indicator.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MovieTileComponent } from './movie-tile/movie-tile.component';
+import { DefaultImage } from 'src/domain/directives/default.image';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MovieDetailsDialog } from 'src/domain/dialogs/movie-details-dialog/movie-details.dialog';
+import { CategoryBubblesComponent } from './category-bubbles/category-bubbles.component';
+
+/**
+ * add facade service for user service
+ * add carousel or see how hard it would be to create a carousel component
+ * add read me instructions
+ */
 
 @NgModule({
   declarations: [
@@ -28,10 +49,18 @@ import { AuthService, MockAuthService } from '@services';
     LogoutComponent,
     NotFoundComponent,
     HomeComponent,
+    NavbarComponent,
+    MovieRecommendationComponent,
+    MyRentalsComponent,
+    UserWalletIndicatorComponent,
+    MovieTileComponent,
+    MovieDetailsDialog,
+    DefaultImage,
+    CategoryBubblesComponent,
   ],
   imports: [
     SharedDomainModule.configure(
-      environment.production ? AuthService : MockAuthService
+      environment.mockMode ? MockAuthService : AuthService
     ),
     BrowserModule,
     AppRoutingModule,
@@ -46,8 +75,27 @@ import { AuthService, MockAuthService } from '@services';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatTooltipModule,
+    MatSidenavModule,
+    MatGridListModule,
+    MatDialogModule,
   ],
-  providers: [LoggedInActivateGuard, AlreadyLoggedInActivateGuard],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenBearerInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenRefreshInterceptor,
+      multi: true,
+    },
+    LoggedInActivateGuard,
+    AlreadyLoggedInActivateGuard,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

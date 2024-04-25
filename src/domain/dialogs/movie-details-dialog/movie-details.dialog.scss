@@ -1,0 +1,40 @@
+.mat-dialog-content {
+  display: flex;
+  flex-direction: row;
+  height: 500px;
+}
+
+.movie-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.movie-title {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+mat-icon.rating {
+  color: yellow;
+  font-size: 14px;
+}
+
+mat-icon.clock {
+  font-size: 14px;
+}
+
+img {
+  height: 500px;
+}
+
+.movie-description {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.mat-dialog-actions-container {
+  display: flex;
+  justify-content: flex-end;
+}

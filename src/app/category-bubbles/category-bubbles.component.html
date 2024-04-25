@@ -1,0 +1,8 @@
+<ng-template ngFor let-item [ngForOf]="categoriesModel" let-i="index">
+  <span
+    class="category-bubble"
+    [ngClass]="{ 'is-clicked': categoriesModel[i].isClicked && areClickable, 'not-clickable': !areClickable}"
+    (click)="bubbleClicked(categoriesModel[i])"
+    >{{ categoriesModel[i].name }}</span
+  >
+</ng-template>

@@ -96,7 +96,7 @@ export class AuthService implements IAuthService {
     }
 
     return this.http
-      .post<any>(refreshTokenUrl, { refresh_token: refreshToken })
+      .post<any>(refreshTokenUrl, { refresh: refreshToken })
       .pipe(
         map((response) => {
           // Extract access token from the response

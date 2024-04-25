@@ -1,0 +1,25 @@
+<div mat-dialog-content>
+  <div>
+    <img src="{{ movie.poster_url }}" />
+  </div>
+  <div class="movie-content">
+    <div>
+        <span class="movie-title">{{ movie.title }} ({{movie.pub_date}})</span>
+        <span class="movie-description">
+          <p class="movie-description-title">Description</p>
+          <span class="movie-description-content"> {{ movie.description }} </span>
+        </span>
+        <div>
+            <p>
+              <span> Rating: {{movie.rating}} <mat-icon class="rating" matTooltip="Rating">star</mat-icon></span>
+              <span>{{movie.duration}} <mat-icon class="clock" matTooltip="Duration">schedule</mat-icon></span>
+            </p>
+          <app-category-bubbles [categories]="movie.categories"></app-category-bubbles>
+        </div>
+    </div>
+    <div class="mat-dialog-actions-container">
+      <button mat-raised-button color="primary" *ngIf="!isRented" (click)="rentMovie()" [disabled]="isLoadingAction">Rent</button>
+      <button mat-raised-button color="primary" *ngIf="isRented" (click)="returnMovie()" [disabled]="isLoadingAction">Return Movie</button>
+    </div>
+  </div>
+</div>

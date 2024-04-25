@@ -1,3 +1,12 @@
-<ng-template ngFor let-item [ngForOf]="movies" let-i="index">
-  <app-movie-tile [movie]="movies[i]"></app-movie-tile>
-</ng-template>
+<div class="container">
+  <div class="actions-container">
+    <button mat-button class="primary" (click)="getPreviousPage()" [disabled]="page <= 1"><mat-icon>arrow_back</mat-icon></button>
+    <app-category-bubbles [categories]="allMovieCategories" [areClickable]=true (categoryClicked)="categoryClicked($event)"></app-category-bubbles>
+    <button mat-button class="primary" (click)="getNextPage()"><mat-icon>arrow_forward</mat-icon></button>
+  </div>
+  <div class="movie-container">
+    <ng-template ngFor let-item [ngForOf]="movies" let-i="index">
+      <app-movie-tile [movie]="movies[i]"></app-movie-tile>
+    </ng-template>
+  </div>
+</div>

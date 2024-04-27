@@ -1,0 +1,27 @@
+:host {
+  height: 100%;
+  display: block;
+}
+
+.rental-grid-container {
+  max-height: 80vh;
+  height: 80vh;
+  overflow: auto;
+}
+
+table.mat-table {
+  table-layout: fixed;
+  width: 100%;
+  display: table;
+  height: 80%;
+  overflow: scroll;
+}
+
+.movie-paid {
+  color: green;
+  font-weight: bold;
+}
+
+.movie-not-paid {
+  color: gray;
+}

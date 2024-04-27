@@ -35,6 +35,9 @@ import { DefaultImage } from 'src/domain/directives/default.image';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MovieDetailsDialog } from 'src/domain/dialogs/movie-details-dialog/movie-details.dialog';
 import { CategoryBubblesComponent } from './category-bubbles/category-bubbles.component';
+import { RentalGridComponent } from './rental-grid/rental-grid.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 /**
  * add facade service for user service
@@ -57,6 +60,7 @@ import { CategoryBubblesComponent } from './category-bubbles/category-bubbles.co
     MovieDetailsDialog,
     DefaultImage,
     CategoryBubblesComponent,
+    RentalGridComponent,
   ],
   imports: [
     SharedDomainModule.configure(
@@ -81,6 +85,8 @@ import { CategoryBubblesComponent } from './category-bubbles/category-bubbles.co
     MatSidenavModule,
     MatGridListModule,
     MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [
     {

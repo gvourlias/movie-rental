@@ -30,7 +30,7 @@ export class TokenRefreshInterceptor implements HttpInterceptor {
             return throwError(error);
           }
           this.refreshAttemts++;
-          
+
           // Token expired, attempt to refresh
           return this.authFacade.doRefreshToken().pipe(
             switchMap(() => {
@@ -40,6 +40,7 @@ export class TokenRefreshInterceptor implements HttpInterceptor {
                   Authorization: `Bearer ${this.authFacade.getAccessToken()}`,
                 },
               });
+              this.refreshAttemts = 0;
               return next.handle(newRequest);
             }),
             catchError((refreshError) => {
